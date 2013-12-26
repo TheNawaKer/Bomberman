@@ -22,21 +22,21 @@ include_directories(${SDL_INCLUDE_DIR})
 # On ajoute SDL_image
 Find_Package(SDL_image REQUIRED)
 
-if ( NOT SDL_IMAGE_FOUND )
+if ( NOT SDLIMAGE_FOUND )
     message(FATAL_ERROR "SDL_image not found !")
-endif ( NOT SDL_IMAGE_FOUND )
+endif ( NOT SDLIMAGE_FOUND )
 
-include_directories(${SDL_IMAGE_INCLUDE_DIR})
+include_directories(${SDLIMAGE_INCLUDE_DIR})
 
 
 # On ajoute SDL_ttf
 Find_Package(SDL_ttf REQUIRED)
 
-if ( NOT SDL_TTF_FOUND )
+if ( NOT SDLTTF_FOUND )
     message(FATAL_ERROR "SDL_ttf not found !")
-endif ( NOT SDL_TTF_FOUND )
+endif ( NOT SDLTTF_FOUND )
 
-include_directories(${SDL_TTF_INCLUDE_DIR})
+include_directories(${SDLTTF_INCLUDE_DIR})
 
 file(
     GLOB_RECURSE
@@ -54,6 +54,6 @@ add_executable(
 target_link_libraries(
     ${BINNAME}
     ${SDL_LIBRARY}
-    ${SDL_IMAGE_LIBRARIES}
-    ${SDL_TTF_LIBRARIES}
+    ${SDLIMAGE_LIBRARY}
+    ${SDLTTF_LIBRARY}
 )
