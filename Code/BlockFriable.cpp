@@ -7,9 +7,11 @@ BlockFriable::BlockFriable(int x ,int y){
 }
 
 void BlockFriable::Briser(){
-	resitance = 0;
+	resistance = 0;
 }
 
 void BlockFriable::Afficher(){
-	
+	if(resistance != 0){
+
+	}
 }
