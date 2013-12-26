@@ -1,0 +1,1 @@
+/usr/bin/c++       CMakeFiles/Bomberman.dir/Code/BlockIncassable.cpp.o CMakeFiles/Bomberman.dir/Code/FenetreSDL.cpp.o CMakeFiles/Bomberman.dir/Code/Joueur.cpp.o CMakeFiles/Bomberman.dir/Code/main.cpp.o  -o Bomberman -rdynamic -lSDL -Wl,-Bstatic -lSDLmain -Wl,-Bdynamic -lpthread -lSDL_image -lSDL_ttf 
