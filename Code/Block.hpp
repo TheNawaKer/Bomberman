@@ -3,9 +3,10 @@
 
 
 class Block{
-private:
+protected:
 	int posx;
 	int posy;
+	int resistance;
 public:
 	virtual ~Block()=0;
 	virtual void Briser()=0;
@@ -13,6 +14,13 @@ public:
 
 };
 
+
+class BlockIncassable : public Block{
+public:
+	BlockIncassable(int,int);
+	virtual void Briser();
+	virtual void Afficher();
+};
 
 
 #endif
