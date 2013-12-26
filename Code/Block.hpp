@@ -1,26 +1,22 @@
 #ifndef _Block
 #define _Block
 
+#include <SDL/SDL.h>
+#include <SDL/SDL_image.h>
+
 
 class Block{
 protected:
 	int posx;
 	int posy;
 	int resistance;
+	SDL_Surface * texture;
 public:
-	virtual ~Block()=0;
 	virtual void Briser()=0;
 	virtual void Afficher()=0;
 
 };
 
 
-class BlockIncassable : public Block{
-public:
-	BlockIncassable(int,int);
-	virtual void Briser();
-	virtual void Afficher();
-};
-
-
+//penser a faire COPLIEN !!
 #endif
