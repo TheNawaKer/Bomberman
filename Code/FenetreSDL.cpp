@@ -2,34 +2,33 @@
 using namespace std; 
 
 
-FenetreSDL::FenetreSDL(int h, int l){
+FenetreSDL::FenetreSDL(int l, int h){
   this->h=h;
   this->l=l;
   SDL_Init(SDL_INIT_VIDEO); // initialisation mode graphique 
-
-  ecr = SDL_SetVideoMode(l, h, 32, SDL_HWSURFACE); 
-
+  ecr = SDL_SetVideoMode(l, h, 32, SDL_HWSURFACE | SDL_DOUBLEBUF); 
   SDL_WM_SetCaption("Bomberman", NULL); 
 }
 
 
 void FenetreSDL::vider(){
-    blit(0,0,l,h,NULL);
-  }
+  blit(0,0,l,h,NULL);
+}
 
 void FenetreSDL::flip(){
-    SDL_Flip(ecr);
-  }
+  SDL_Flip(ecr);
+}
 
 FenetreSDL::~FenetreSDL(){
-    SDL_Quit();
-  }
+  SDL_FreeSurface(ecr);
+  SDL_Quit();
+}
 
 
-int FenetreSDL::getL()const{
+int FenetreSDL::getL() const{
   return l;
 }
-int FenetreSDL::getH()const{
+int FenetreSDL::getH() const{
   return h;
 }
 
