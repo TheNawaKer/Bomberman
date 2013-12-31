@@ -25,9 +25,14 @@ namespace bomberman
 
     session_on_client(socket& io): session_base(io), state(STATE_STARTING)
     {
-
+     // sig_begin          .connect(EZMETHOD(this,on_begin));
     }
+
+    //void on_begin();
 };
+
+ // void session_on_client::on_begin();
+
 
 }
 int main(int argc, char** argv)

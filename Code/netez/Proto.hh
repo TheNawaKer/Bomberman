@@ -18,7 +18,7 @@ namespace bomberman
     message<5,void()                 > Board;
     message<6,void(int,int,int)       > Move;
     message<7,void(int,int,int)      > Moved;
-    message<8,void(int,int)        > PutBomb;
+    message<8,void(int,int)        > DropBomb;
     message<9,void(int)                > Won;
     message<10,void()                 > Quit;
     message<11,void(int,int)     > Explosion;
@@ -37,7 +37,7 @@ namespace bomberman
 	Board     (this),
 	Move      (this),
 	Moved     (this),
-	PutBomb   (this),
+	DropBomb   (this),
 	Won       (this),
   Quit      (this),
   Explosion (this),
