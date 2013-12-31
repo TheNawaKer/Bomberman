@@ -27,7 +27,7 @@ namespace bomberman
     message<14,void(int,int)  > BlockBreaked;
     message<15,void(std::string)    > Joined;
 
-    proto(socket& io)
+    proto_bomber(socket& io)
       : protocol<>(io),
 	Connecting(this),
 	Connected (this),
