@@ -10,29 +10,41 @@ namespace bomberman
 
   struct proto_bomber: public protocol<>
   {
-    message<0,void()   > connecting;
-    message<1,void()   > connected;
-    message<2,void(std::string)   > nick;
-    message<3,void()   > play;
-    message<4,void(int)> take;
-    message<5,void()   > ok;
-    message<6,void()   > err;
-    message<7,void(int)> took;
-    message<8,void()   > lost;
-    message<9,void()   > won;
+    message<0,void()            > Connecting;
+    message<1,void()             > Connected;
+    message<2,void(std::string)       > Nick;
+    message<3,void(std::string)        > Err;
+    message<4,void()                    > Go;
+    message<5,void()                 > Board;
+    message<6,void(int,int,int)       > Move;
+    message<7,void(int,int,int)      > Moved;
+    message<8,void(int,int)        > PutBomb;
+    message<9,void(int)                > Won;
+    message<10,void()                 > Quit;
+    message<11,void(int,int)     > Explosion;
+    message<12,void(int,int)          > Bomb;
+    message<13,void(int,int)           > Die;
+    message<14,void(int,int)  > BlockBreaked;
+    message<15,void(std::string)    > Joined;
 
     proto(socket& io)
       : protocol<>(io),
-	connecting(this),
-	connected (this),
-	nick      (this),
-	play      (this),
-	take      (this),
-	ok        (this),
-	err       (this),
-	took      (this),
-	lost      (this),
-	won       (this)
+	Connecting(this),
+	Connected (this),
+	Nick      (this),
+	Err       (this),
+	Go        (this),
+	Board     (this),
+	Move      (this),
+	Moved     (this),
+	PutBomb   (this),
+	Won       (this),
+  Quit      (this),
+  Explosion (this),
+  Bomb      (this),
+  Die       (this),
+  BlockBreaked (this),
+  Joined    (this)
     {}
   };
 
