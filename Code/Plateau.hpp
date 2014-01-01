@@ -1,6 +1,9 @@
 #ifndef PLATEAU
 #define PLATEAU
 
+#include "Block.hpp"
+#include <SDL/SDL.h>
+
 
 class Plateau{
 private:
