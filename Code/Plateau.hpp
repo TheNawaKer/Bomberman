@@ -3,12 +3,13 @@
 
 #include "Block.hpp"
 #include <SDL/SDL.h>
+#include <vector>
 
 
 class Plateau{
 private:
 	SDL_Surface * background;
-	Block * tab;
+	std::vector<Block *> blocks;
 public:
 	
 	~Plateau();
