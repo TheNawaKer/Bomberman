@@ -7,6 +7,7 @@ namespace bomberman
   using namespace netez;
 
 
+
   struct session_on_server: public session_base
   {
     session_on_server(socket& io): session_base(io)
@@ -22,12 +23,30 @@ namespace bomberman
     void do_dropbomb(int,int);
   };
 
+  ezmutex the_mutex;
+  map<string,session_on_server*> tab;
 
 
 
+void session_on_server::do_nick(string nick){
+    ezlock hold(the_mutex);
+    auto it(tab.find(nick));
+    if(it == tab.end()){
+      //add nick to the map
+     tab[nick]=this;
+     proto.Go();
 
-void session_on_server::do_nick(string s){
 
+    auto it(tab.begin());
+    while(it != tab.end()){
+      //tell everyone (exept nick) that 'nick' is here
+      if(it->first != nick) it->second->proto.Joined(nick);
+      ++it;
+    }
+
+
+   }
+    else proto.Err("#error# This nick is already used.");
 }
 
 void session_on_server::do_quit(){
