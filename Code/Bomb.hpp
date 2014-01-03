@@ -13,6 +13,8 @@ private:
 public:
 	Bomb(int,int);
 	Bomb(int,int,int);
+	int getPosX() const;
+	int getPosY() const;
 	~Bomb();
 };
 

@@ -14,7 +14,8 @@ protected:
 public:
 	virtual void Briser()=0;
 	virtual void Afficher()=0;
-
+	int getPosX() const;
+	int getPosY() const;
 };
 
 
