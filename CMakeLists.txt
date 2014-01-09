@@ -3,8 +3,10 @@ cmake_minimum_required(VERSION 2.6)
 # nom e l'executable
 set (PROJ Bomberman)
 
+ADD_DEFINITIONS(-std=c++0x)
+
 # Nom du projet
-project(${PROJ})
+project(${PROJ} CXX)
 
 # repertoire du binaire
 set (BINNAME ${PROJ})
@@ -40,10 +42,10 @@ endif ( NOT SDLTTF_FOUND )
 include_directories(${SDLTTF_INCLUDE_DIR})
 
 # On ajoute netez
-set (NETEZ_INCLUDE_DIR $ENV{HOME}/include/netez)
-set (NETEZ_LIBRARY $ENV{HOME}/lib/netez)
+#set (NETEZ_INCLUDE_DIR $ENV{HOME}/include/netez)
+#set (NETEZ_LIBRARY $ENV{HOME}/lib/netez)
 
-include_directories(${NETEZ_INCLUDE_DIR})
+#include_directories(${NETEZ_INCLUDE_DIR})
 
 file(
     GLOB_RECURSE
@@ -59,10 +61,9 @@ add_executable(
 
 # On link les libs
 target_link_libraries(
-    ${BINNAME}
+    ${BINNAME} -Wl,
     ${SDL_LIBRARY}
     ${SDLIMAGE_LIBRARY}
     ${SDLTTF_LIBRARY}
-    --copy-dt-needed-entries 
     -lnetez
 )
