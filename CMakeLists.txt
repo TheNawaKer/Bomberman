@@ -57,8 +57,6 @@ add_executable(
     ${source_files}
 )
 
-ADD_DEFINITIONS(-std=c++0x)
-
 # On link les libs
 target_link_libraries(
     ${BINNAME}
