@@ -32,11 +32,18 @@ include_directories(${SDLIMAGE_INCLUDE_DIR})
 # On ajoute SDL_ttf
 Find_Package(SDL_ttf REQUIRED)
 
+message(${SDL_FOUND})
 if ( NOT SDLTTF_FOUND )
     message(FATAL_ERROR "SDL_ttf not found !")
 endif ( NOT SDLTTF_FOUND )
 
 include_directories(${SDLTTF_INCLUDE_DIR})
+
+# On ajoute netez
+set (NETEZ_INCLUDE_DIR $ENV{HOME}/include/netez)
+set (NETEZ_LIBRARY $ENV{HOME}/lib/netez)
+
+include_directories(${NETEZ_INCLUDE_DIR})
 
 file(
     GLOB_RECURSE
@@ -50,10 +57,14 @@ add_executable(
     ${source_files}
 )
 
+ADD_DEFINITIONS(-std=c++0x)
+
 # On link les libs
 target_link_libraries(
     ${BINNAME}
     ${SDL_LIBRARY}
     ${SDLIMAGE_LIBRARY}
     ${SDLTTF_LIBRARY}
+    --copy-dt-needed-entries 
+    -lnetez
 )
