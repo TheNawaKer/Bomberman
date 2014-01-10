@@ -11,6 +11,9 @@ project(${PROJ} CXX)
 # repertoire du binaire
 set (BINNAME ${PROJ})
 
+set (CLI client)
+set (SER server)
+
 # On ajoute SDL
 Find_Package(SDL REQUIRED)
 
@@ -49,21 +52,63 @@ include_directories(${SDLTTF_INCLUDE_DIR})
 
 file(
     GLOB_RECURSE
-    source_files
-    Code/*
+    source_files_global
+    Code/global/*
 )
+
+file(
+    GLOB_RECURSE
+    source_files_client
+    Code/client/*
+)
+
+file(
+    GLOB_RECURSE
+    source_files_server
+    Code/server/*
+)
+
+file(
+    GLOB_RECURSE
+    source_files_proto
+    Code/proto/*
+)
+
 
 # Déclaration de l'exécutable
 add_executable(
     ${BINNAME}
-    ${source_files}
+    ${source_files_global}
+)
+
+# Déclaration de l'exécutable
+add_executable(
+    ${CLI}
+    ${source_files_client}
+    ${source_files_proto}
+)
+
+# Déclaration de l'exécutable
+add_executable(
+    ${SER}
+    ${source_files_server}
+    ${source_files_proto}
 )
 
 # On link les libs
 target_link_libraries(
-    ${BINNAME} -Wl,
+    ${BINNAME}
     ${SDL_LIBRARY}
     ${SDLIMAGE_LIBRARY}
     ${SDLTTF_LIBRARY}
+)
+
+target_link_libraries(
+    ${CLI}
+    -lnetez
+)
+
+target_link_libraries(
+    ${SER}
     -lnetez
 )
