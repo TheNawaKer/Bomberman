@@ -1,7 +1,0 @@
-project(nim CXX)
-CMAKE_MINIMUM_REQUIRED(VERSION 2.6)
-ADD_DEFINITIONS(-std=c++0x)
-ADD_EXECUTABLE(client Client.cc)
-ADD_EXECUTABLE(server Server.cc)
-TARGET_LINK_LIBRARIES(client -Wl,--copy-dt-needed-entries -lnetez)
-TARGET_LINK_LIBRARIES(server -Wl,--copy-dt-needed-entries -lnetez)
