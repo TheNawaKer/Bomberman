@@ -22,3 +22,7 @@ int Bomb::getPosX() const{
 int Bomb::getPosY() const{
 	return posy;
 }
+
+void Bomb::Afficher(){
+	
+}

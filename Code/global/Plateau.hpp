@@ -20,6 +20,7 @@ public:
 	void ajouterBombe(int x,int y);
 	void enleverBomb(int x,int y);
 	~Plateau();
+	void Afficher();
 };
 
 #endif

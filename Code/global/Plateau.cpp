@@ -23,3 +23,14 @@ void Plateau::enleverBomb(int x,int y){
 			bombs.erase(bombs.begin()+i);
 	}
 }
+
+
+void Plateau::Afficher(){
+	//backgroung
+	for(int i=0; i <blocks.size(); ++i) 
+		blocks[i]->Afficher();
+
+	for(int j =0; j<bombs.size(); ++j)
+		bombs[j].Afficher();
+
+}

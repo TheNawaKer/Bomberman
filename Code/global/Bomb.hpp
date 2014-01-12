@@ -16,6 +16,7 @@ public:
 	int getPosX() const;
 	int getPosY() const;
 	~Bomb();
+	void Afficher();
 };
 
 #endif
