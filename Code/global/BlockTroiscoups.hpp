@@ -7,7 +7,7 @@ class BlockTroiscoups: public Block{
 public:
 	BlockTroiscoups(int,int);
 	virtual void Briser();
-	virtual void Afficher();
+	virtual void Afficher(FenetreSDL * ecr);
 };
 
 

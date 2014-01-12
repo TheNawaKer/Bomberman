@@ -25,12 +25,12 @@ void Plateau::enleverBomb(int x,int y){
 }
 
 
-void Plateau::Afficher(){
+void Plateau::Afficher(FenetreSDL * ecr){
 	//backgroung
 	for(int i=0; i <blocks.size(); ++i) 
-		blocks[i]->Afficher();
+		blocks[i]->Afficher(ecr);
 
 	for(int j =0; j<bombs.size(); ++j)
-		bombs[j].Afficher();
+		bombs[j].Afficher(ecr);
 
 }

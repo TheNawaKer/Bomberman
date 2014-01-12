@@ -7,7 +7,7 @@ class BlockFriable: public Block{
 public:
 	BlockFriable(int,int);
 	virtual void Briser();
-	virtual void Afficher();
+	virtual void Afficher(FenetreSDL * ecr);
 };
 
 

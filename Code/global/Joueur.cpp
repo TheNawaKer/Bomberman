@@ -24,3 +24,7 @@ Joueur::~Joueur(){
 	if(texture)
 		SDL_FreeSurface(texture);
 }
+
+void Joueur::Afficher(FenetreSDL * ecr){
+
+}

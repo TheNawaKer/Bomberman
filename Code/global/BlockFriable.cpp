@@ -10,7 +10,7 @@ void BlockFriable::Briser(){
 	resistance = 0;
 }
 
-void BlockFriable::Afficher(){
+void BlockFriable::Afficher(FenetreSDL * ecr){
 	if(resistance != 0){
 
 	}

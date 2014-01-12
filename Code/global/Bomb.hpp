@@ -2,7 +2,7 @@
 #define _BOMB
 
 #include <SDL/SDL.h>
-
+#include "FenetreSDL.hpp"
 
 class Bomb{
 private:
@@ -16,7 +16,7 @@ public:
 	int getPosX() const;
 	int getPosY() const;
 	~Bomb();
-	void Afficher();
+	void Afficher(FenetreSDL * ecr);
 };
 
 #endif

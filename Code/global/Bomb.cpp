@@ -23,6 +23,6 @@ int Bomb::getPosY() const{
 	return posy;
 }
 
-void Bomb::Afficher(){
-	
+void Bomb::Afficher(FenetreSDL * ecr){
+
 }

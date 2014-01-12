@@ -10,6 +10,6 @@ void BlockIncassable::Briser(){
 
 }
 
-void BlockIncassable::Afficher(){
+void BlockIncassable::Afficher(FenetreSDL * ecr){
 	
 }
