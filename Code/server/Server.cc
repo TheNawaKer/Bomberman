@@ -1,4 +1,4 @@
-#include "Proto.hh"
+#include "../proto/Proto.hh"
 #include <iostream>
 
 namespace bomberman

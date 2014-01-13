@@ -1,4 +1,4 @@
-#include "Proto.hh"
+#include "../proto/Proto.hh"
 #include <iostream>
 using namespace std;
 

@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 2.6)
 
-# nom e l'executable
+# nom de l'executable
 set (PROJ Bomberman)
 
 ADD_DEFINITIONS(-std=c++0x)
@@ -23,7 +23,6 @@ endif ( NOT SDL_FOUND )
 
 include_directories(${SDL_INCLUDE_DIR})
 
-
 # On ajoute SDL_image
 Find_Package(SDL_image REQUIRED)
 
@@ -33,22 +32,13 @@ endif ( NOT SDLIMAGE_FOUND )
 
 include_directories(${SDLIMAGE_INCLUDE_DIR})
 
-
 # On ajoute SDL_ttf
 Find_Package(SDL_ttf REQUIRED)
-
-message(${SDL_FOUND})
 if ( NOT SDLTTF_FOUND )
     message(FATAL_ERROR "SDL_ttf not found !")
 endif ( NOT SDLTTF_FOUND )
 
 include_directories(${SDLTTF_INCLUDE_DIR})
-
-# On ajoute netez
-#set (NETEZ_INCLUDE_DIR $ENV{HOME}/include/netez)
-#set (NETEZ_LIBRARY $ENV{HOME}/lib/netez)
-
-#include_directories(${NETEZ_INCLUDE_DIR})
 
 file(
     GLOB_RECURSE
@@ -104,11 +94,13 @@ target_link_libraries(
 )
 
 target_link_libraries(
-    ${CLI}
+    ${CLI} 
+	-Wl,--copy-dt-needed-entries
     -lnetez
 )
 
 target_link_libraries(
-    ${SER}
+    ${SER} 
+	-Wl,--copy-dt-needed-entries
     -lnetez
 )
