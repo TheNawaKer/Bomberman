@@ -1,4 +1,4 @@
-#include "FenetreSDL.hpp"
+#include "global/FenetreSDL.hpp"
 #include <iostream>
 using namespace std;
 

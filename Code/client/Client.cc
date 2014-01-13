@@ -1,4 +1,5 @@
 #include "../proto/Proto.hh"
+#include "../global/FenetreSDL.hpp"
 #include <iostream>
 using namespace std;
 
@@ -124,8 +125,9 @@ string strip( string & s)
 // cli. session . cmd_YYY (...) pour executer les
 // commandes saisies par l’utilisateur 
 void interaction_loop(bomberman::session_on_client & s){
+  FenetreSDL fenetre(640,480);
   string line;
-  while(1){
+  while(true){
     getline(cin,line);
     string cmd;
     istringstream is(line);
@@ -136,9 +138,7 @@ void interaction_loop(bomberman::session_on_client & s){
       is>>nick;
       s.proto.Nick(nick);
       s.state = bomberman::WAITING_FOR_NICK;
-    } 
-
-    else if(cmd == "/quit"){
+    }else if(cmd == "/quit"){
         s.proto.Quit();
         break;
     }

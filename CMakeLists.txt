@@ -69,12 +69,14 @@ file(
 add_executable(
     ${BINNAME}
     ${source_files_global}
+    Code/main.cpp
 )
 
 # Déclaration de l'exécutable
 add_executable(
     ${CLI}
     ${source_files_client}
+    ${source_files_global}
     ${source_files_proto}
 )
 
@@ -97,6 +99,9 @@ target_link_libraries(
     ${CLI} 
 	-Wl,--copy-dt-needed-entries
     -lnetez
+    ${SDL_LIBRARY}
+    ${SDLIMAGE_LIBRARY}
+    ${SDLTTF_LIBRARY}
 )
 
 target_link_libraries(
