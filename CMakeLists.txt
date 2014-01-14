@@ -6,7 +6,7 @@ set (PROJ Bomberman)
 ADD_DEFINITIONS(-std=c++0x)
 
 # Nom du projet
-project(${PROJ} CXX)
+project(${PROJ} C CXX)
 
 # repertoire du binaire
 set (BINNAME ${PROJ})
@@ -97,7 +97,9 @@ target_link_libraries(
 
 target_link_libraries(
     ${CLI} 
-	-Wl,--copy-dt-needed-entries
+    -lboost_iostreams-mt
+	-lboost_thread-mt
+	-lboost_program_options-mt
     -lnetez
     ${SDL_LIBRARY}
     ${SDLIMAGE_LIBRARY}
@@ -105,7 +107,10 @@ target_link_libraries(
 )
 
 target_link_libraries(
-    ${SER} 
-	-Wl,--copy-dt-needed-entries
+    ${SER}
+    -lboost_iostreams-mt
+	-lboost_thread-mt
+	-lboost_program_options-mt
+	-lpthread
     -lnetez
 )
