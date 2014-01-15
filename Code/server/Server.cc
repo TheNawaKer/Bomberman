@@ -50,7 +50,7 @@ void session_on_server::do_nick(string nick){
 }
 
 void session_on_server::do_quit(){
-
+  finish();
 }
 
 void session_on_server::do_move(int posx,int posy,int id){
