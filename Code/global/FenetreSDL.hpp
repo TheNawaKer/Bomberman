@@ -16,6 +16,7 @@ public:
   int getL()const;
   int getH()const;
   void blit(int,int,int,int,SDL_Surface*);
+  void blit(int x,int y,SDL_Surface *surf);
 };
 
 

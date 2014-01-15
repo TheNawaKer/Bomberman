@@ -21,7 +21,7 @@ public:
 	void ajouterBombe(int x,int y);
 	void enleverBomb(int x,int y);
 	~Plateau();
-	void Afficher(FenetreSDL * ecr);
+	void afficher(FenetreSDL * ecr);
 };
 
 #endif

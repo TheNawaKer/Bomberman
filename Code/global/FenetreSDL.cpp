@@ -36,3 +36,10 @@ void FenetreSDL::blit(int x,int y,int lsurf,int hsurf,SDL_Surface *surf){
   SDL_Rect rect={x,y,lsurf,hsurf};
   SDL_BlitSurface(surf,NULL,ecr,&rect);
 }
+
+void FenetreSDL::blit(int x,int y,SDL_Surface *surf){
+  SDL_Rect rect;
+  rect.x=x;
+  rect.y=y;
+  SDL_BlitSurface(surf,NULL,ecr,&rect);
+}
