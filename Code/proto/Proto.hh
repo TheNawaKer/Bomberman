@@ -16,7 +16,7 @@ namespace bomberman
     message<3,void(std::string)        > Err;
     message<4,void(int,int,std::string) > Go;
     message<5,void(int,int,int)                 > Board;
-    message<6,void(int,int,int)       > Move;
+    message<6,void(int,int)       > Move;
     message<7,void(int,int,int)      > Moved;
     message<8,void(int,int)        > DropBomb;
     message<9,void(int)                > Won;

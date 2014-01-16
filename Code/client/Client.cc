@@ -2,6 +2,8 @@
 #include "../global/FenetreSDL.hpp"
 #include "../global/Plateau.hpp"
 #include "../global/Joueur.hpp"
+
+#include "../global/Input.hpp"
 #include <pthread.h>
 #include <iostream>
 using namespace std;
@@ -174,7 +176,18 @@ string strip( string & s)
 // commandes saisies par l’utilisateur 
 void interaction_loop(bomberman::session_on_client & s){
   string line;
+  Input in;
   while(true){
+
+    if(s.state == bomberman::IN_GAME){
+      in.Update();
+      if(in.Key(SDLK_UP)){ s.proto.Move(s.joueurs[0]->getPosX(),s.joueurs[0]->getPosY()+1); }
+      if(in.Key(SDLK_DOWN)){ s.proto.Move(s.joueurs[0]->getPosX(),s.joueurs[0]->getPosY()-1); }
+      if(in.Key(SDLK_RIGHT)){ s.proto.Move(s.joueurs[0]->getPosX()+1,s.joueurs[0]->getPosY()); }
+      if(in.Key(SDLK_LEFT)){ s.proto.Move(s.joueurs[0]->getPosX()-1,s.joueurs[0]->getPosY()+1); }
+      if(in.Key(SDLK_SPACE)){ s.proto.DropBomb(s.joueurs[0]->getPosX(),s.joueurs[0]->getPosY()); }
+    }
+
     cout<<"boucle"<<endl;
     getline(cin,line);
     string cmd;

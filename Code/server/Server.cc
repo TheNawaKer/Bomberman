@@ -21,7 +21,7 @@ namespace bomberman
     }
     void do_nick(string s);
     void do_quit();
-    void do_move(int,int,int);
+    void do_move(int,int);
     void do_dropbomb(int,int);
     void send_board();
   };
@@ -114,9 +114,10 @@ void session_on_server::send_board(){
   }
 }
 
-void session_on_server::do_move(int posx,int posy,int id){
+void session_on_server::do_move(int posx,int posy){
   auto it(tab.begin());
   bool move=true;
+  int id=0; //à déterminer;
   while(it != tab.end()){
     if(it->first!=id && joueurs[it->first]->getPosX()==posx && joueurs[it->first]->getPosY()==posy){
       move=false;
