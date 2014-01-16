@@ -43,25 +43,25 @@ include_directories(${SDLTTF_INCLUDE_DIR})
 file(
     GLOB_RECURSE
     source_files_global
-    Code/global/*
+    ../../Code/global/*
 )
 
 file(
     GLOB_RECURSE
     source_files_client
-    Code/client/*
+    ../../Code/client/*
 )
 
 file(
     GLOB_RECURSE
     source_files_server
-    Code/server/*
+    ../../Code/server/*
 )
 
 file(
     GLOB_RECURSE
     source_files_proto
-    Code/proto/*
+    ../../Code/proto/*
 )
 
 
@@ -69,7 +69,7 @@ file(
 add_executable(
     ${BINNAME}
     ${source_files_global}
-    Code/main.cpp
+    ../../Code/main.cpp
 )
 
 # Déclaration de l'exécutable

@@ -3,7 +3,12 @@
 using namespace std;
 
 Joueur::Joueur(int x,int y,string pseudo):posx(x),posy(y),nick(pseudo){
-	texture=IMG_Load("buisson.png");
+	texture=NULL;
+}
+
+Joueur::Joueur(int x,int y,string pseudo,string img):posx(x),posy(y),nick(pseudo){
+	img+=".png";
+	texture=IMG_Load(img.c_str());
 }
 
 int Joueur::getPosX() const{
@@ -32,5 +37,6 @@ Joueur::~Joueur(){
 }
 
 void Joueur::afficher(FenetreSDL * ecr){
-	ecr->blit(40+posx*40,60+posy*40,texture);
+	if(texture!=NULL)
+		ecr->blit(40+posx*40,60+posy*40,texture);
 }

@@ -108,14 +108,14 @@ void session_on_client::do_joined(int x,int y,string nick){
   while(joueurs[i]!=NULL){
     i++;
   }
-  joueurs[i]=new Joueur(x,y,nick);
+  joueurs[i]=new Joueur(x,y,nick,"persoD"+i+1);
 }
 
 void session_on_client::do_go(int x,int y,string nick){
   if(state == WAITING_FOR_NICK){
     cout<<"You are now nicked , waiting for a game room"<<endl;
     plateau=new Plateau(30,15);
-    joueurs[0]=new Joueur(x,y,nick);
+    joueurs[0]=new Joueur(x,y,nick,"persoD1");
     pthread_create (&thread, NULL, affichage, (void *)this);
     state = WAITING_FOR_GAME;
   }

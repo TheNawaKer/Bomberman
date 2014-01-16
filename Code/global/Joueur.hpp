@@ -13,6 +13,7 @@ private:
 	int posy;
 	std::string nick;
 public:
+	Joueur(int,int,std::string,std::string);
 	Joueur(int,int,std::string);
 	int getPosX() const;
 	int getPosY() const;
