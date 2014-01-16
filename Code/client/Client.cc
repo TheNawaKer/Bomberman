@@ -70,6 +70,12 @@ void * affichage( void *data )
   while(!quit)
   {
     s->plateau->afficher(&fenetre);
+    for(int i=0;i<4;i++){
+      if(s->joueurs[i]){
+        s->joueurs[i]->afficher(&fenetre);
+      }
+    }
+
     fenetre.flip();
         //Tant qu'il y a un événement
     while( SDL_PollEvent( &event ) )
@@ -86,6 +92,9 @@ void * affichage( void *data )
 
 void session_on_client::on_begin(){
   cout<<"Welcome to the bomberman game, please nick yourself"<<endl;
+  for(int i=0;i<4;i++){
+    joueurs[i]=NULL;
+  }
 }
 
 void session_on_client::do_err(string msg){
@@ -96,7 +105,7 @@ void session_on_client::do_err(string msg){
 void session_on_client::do_joined(int x,int y,string nick){
   cout<<nick<<" is now waiting for a game"<<endl;
   int i=1;
-  while(!joueurs[i]){
+  while(joueurs[i]!=NULL){
     i++;
   }
   joueurs[i]=new Joueur(x,y,nick);
@@ -105,7 +114,7 @@ void session_on_client::do_joined(int x,int y,string nick){
 void session_on_client::do_go(int x,int y,string nick){
   if(state == WAITING_FOR_NICK){
     cout<<"You are now nicked , waiting for a game room"<<endl;
-    plateau=new Plateau(30,16);
+    plateau=new Plateau(30,15);
     joueurs[0]=new Joueur(x,y,nick);
     pthread_create (&thread, NULL, affichage, (void *)this);
     state = WAITING_FOR_GAME;

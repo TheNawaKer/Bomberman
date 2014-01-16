@@ -35,7 +35,7 @@ namespace bomberman
 
   void init(){
     nb=0;
-    plateau=new Plateau(30,16);
+    plateau=new Plateau(30,15);
     cout<<"Demarrage du serveur"<<endl;
   }
 
@@ -62,11 +62,11 @@ namespace bomberman
       break;
       case 1:
       x=29;
-      y=16;
+      y=14;
       break;
       case 2:
       x=0;
-      y=15;
+      y=14;
       break;
       case 3:
       x=29;
@@ -82,6 +82,10 @@ namespace bomberman
     while(it != tab.end()){
       if(it->first != nb) it->second->proto.Joined(x,y,nick);
       ++it;
+    }
+    it=tab.find(nb);
+    for(int i=0;i<nb;i++){
+        proto.Joined(joueurs[i]->getPosX(),joueurs[i]->getPosY(),joueurs[i]->getNick());
     }
     if(nb==1) 
       send_board();
