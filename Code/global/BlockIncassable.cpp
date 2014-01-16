@@ -9,7 +9,3 @@ BlockIncassable::BlockIncassable(int x ,int y){
 void BlockIncassable::Briser(){
 
 }
-
-void BlockIncassable::Afficher(FenetreSDL * ecr){
-	
-}

@@ -9,9 +9,3 @@ BlockTroiscoups::BlockTroiscoups(int x ,int y){
 void BlockTroiscoups::Briser(){
 	--resistance;
 }
-
-void BlockTroiscoups::Afficher(FenetreSDL * ecr){
-	if(resistance != 0){
-		
-	}
-}

@@ -1,4 +1,5 @@
 #include "FenetreSDL.hpp"
+#include <iostream>
 using namespace std; 
 
 
@@ -21,6 +22,7 @@ void FenetreSDL::flip(){
 
 FenetreSDL::~FenetreSDL(){
   SDL_FreeSurface(ecr);
+  cout<<"Destruction"<<endl;
   SDL_Quit();
 }
 

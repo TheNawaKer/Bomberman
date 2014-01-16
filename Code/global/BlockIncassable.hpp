@@ -7,7 +7,6 @@ class BlockIncassable: public Block{
 public:
 	BlockIncassable(int,int);
 	virtual void Briser();
-	virtual void Afficher(FenetreSDL * ecr);
 };
 
 #endif

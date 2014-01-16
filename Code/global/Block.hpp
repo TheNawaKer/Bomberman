@@ -13,7 +13,7 @@ protected:
 	SDL_Surface * texture;
 public:
 	virtual void Briser()=0;
-	virtual void Afficher(FenetreSDL * ecr)=0;
+	virtual void afficher(FenetreSDL * ecr);
 	int getPosX() const;
 	int getPosY() const;
 };

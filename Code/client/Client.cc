@@ -1,6 +1,7 @@
 #include "../proto/Proto.hh"
 #include "../global/FenetreSDL.hpp"
 #include "../global/Plateau.hpp"
+#include "../global/Joueur.hpp"
 #include <pthread.h>
 #include <iostream>
 using namespace std;
@@ -24,6 +25,8 @@ namespace bomberman
 
 
   state_t state;
+  Plateau * plateau;
+  Joueur * joueurs[4];
   int n;
   int i;
 
@@ -59,6 +62,7 @@ namespace bomberman
 
 void session_on_client::on_begin(){
   cout<<"Welcome to the bomberman game, please nick yourself"<<endl;
+  plateau=new Plateau(30,16);
 }
 
 void session_on_client::do_err(string msg){
@@ -88,7 +92,8 @@ void session_on_client::do_won(int id){
 
 
 void session_on_client::do_moved(int posx,int posy,int id){
-
+  joueurs[id]->setX(posx);
+  joueurs[id]->setY(posy);
 }
 
 
@@ -106,7 +111,7 @@ void session_on_client::do_die(int id){
 }
 
 void session_on_client::do_blockbreaked(int posx,int posy){
-
+  plateau->DetruireBlock(posx,posy);
 }
 
 
@@ -125,13 +130,15 @@ string strip( string & s)
 
 void * affichage( void *data )
 {
+  bomberman::session_on_client* s = (bomberman::session_on_client*)data;
   FenetreSDL fenetre(1280,720);
-  Plateau plateau;
-  plateau.afficher(&fenetre);
+  s->plateau->ajouterBlock(0,0,0);
   SDL_Event event;
+  bool quit=false;
     //Tant que l'utilisateur n'a pas quitté
-  while(true)
+  while(!quit)
   {
+    s->plateau->afficher(&fenetre);
     fenetre.flip();
         //Tant qu'il y a un événement
     while( SDL_PollEvent( &event ) )
@@ -140,7 +147,7 @@ void * affichage( void *data )
       if( event.type == SDL_QUIT )
       {
                 //On quitte the programme
-        break;
+        quit=true;
       }
     }
   }
@@ -151,7 +158,7 @@ void * affichage( void *data )
 // commandes saisies par l’utilisateur 
 void interaction_loop(bomberman::session_on_client & s){
   pthread_t thread;
-  pthread_create (&thread, NULL, affichage, NULL);
+  pthread_create (&thread, NULL, affichage, (void *)&s);
   string line;
   while(true){
     cout<<"boucle"<<endl;
