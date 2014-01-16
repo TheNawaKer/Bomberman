@@ -53,9 +53,9 @@ namespace bomberman
   void do_err(string);
   void do_joined(int,int,string);
   void do_go(int,int,string);
-  void do_board(int,int,int);
+  void do_board(vector<pair<int,int>>);
   void do_won(int);
-  void do_moved(int,int,int);
+  void do_moved(int,int,string);
   void do_explosion(int,int);
   void do_bomb(int,int);
   void do_die(int);
@@ -127,9 +127,12 @@ void session_on_client::do_go(int x,int y,string nick){
 }
 
 
-void session_on_client::do_board(int x,int y,int type){
-  cout<<"ajout d'un block en "<<x<<","<<y<<endl;
-  plateau->ajouterBlock(x,y,type);
+void session_on_client::do_board(vector<pair<int,int>> board){
+  for(int i=0;i<board.size();i++){
+    cout<<"ajout d'un block en "<<board[i].first<<","<<board[i].second<<endl;
+    plateau->ajouterBlock(board[i].first,board[i].second,0);
+  }
+  
 }
 
 void session_on_client::do_won(int id){
@@ -137,9 +140,15 @@ void session_on_client::do_won(int id){
 }
 
 
-void session_on_client::do_moved(int posx,int posy,int id){
-  joueurs[id]->setX(posx);
-  joueurs[id]->setY(posy);
+void session_on_client::do_moved(int posx,int posy,string nick){
+  for(int i=0;i<4;i++){
+    if(joueurs[i]!=NULL && joueurs[i]->getNick()==nick){
+      joueurs[i]->setX(posx);
+      joueurs[i]->setY(posy);
+      break;
+    }
+  }
+
 }
 
 
@@ -205,7 +214,6 @@ void interaction_loop(bomberman::session_on_client & s){
     }else if(cmd == "/quit"){
       s.proto.Quit();
       pthread_cancel(s.thread);
-      finish();
       break;
     }
   }

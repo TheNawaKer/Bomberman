@@ -40,6 +40,20 @@ void Plateau::afficher(FenetreSDL * ecr){
 
 }
 
+bool Plateau::hasBlockOrBomb(int x,int y) const{
+	for(int i=0; i <blocks.size(); ++i){
+		if(blocks[i]->getPosX()==x && blocks[i]->getPosY()==y)
+			return true;
+	}
+
+	for(int i=0; i <bombs.size(); ++i){
+		if(bombs[i].getPosX()==x && bombs[i].getPosY()==y)
+			return true;
+	}
+
+	return false;
+}
+
 Plateau::~Plateau(){
 	if(background)
 		delete background;

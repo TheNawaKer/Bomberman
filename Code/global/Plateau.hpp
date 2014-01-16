@@ -23,6 +23,7 @@ public:
 	void DetruireBlock(int x,int y);
 	void ajouterBombe(int x,int y);
 	void enleverBomb(int x,int y);
+	bool hasBlockOrBomb(int x,int y) const;
 	~Plateau();
 	void afficher(FenetreSDL * ecr);
 };

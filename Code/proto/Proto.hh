@@ -1,7 +1,9 @@
 #ifndef _BOMBER_PROTO_
 #define _BOMBER_PROTO_
 
-#include "netez.hh"
+#include "extra.hh"
+#include <vector>
+#include <utility>
 #include <iostream>
 
 namespace bomberman
@@ -15,9 +17,9 @@ namespace bomberman
     message<2,void(std::string)       > Nick;
     message<3,void(std::string)        > Err;
     message<4,void(int,int,std::string) > Go;
-    message<5,void(int,int,int)                 > Board;
+    message<5,void(std::vector<std::pair<int,int>>) > Board;
     message<6,void(int,int)       > Move;
-    message<7,void(int,int,int)      > Moved;
+    message<7,void(int,int,std::string)      > Moved;
     message<8,void(int,int)        > DropBomb;
     message<9,void(int)                > Won;
     message<10,void()                 > Quit;

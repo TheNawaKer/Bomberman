@@ -103,13 +103,15 @@ void session_on_server::do_quit(){
 void session_on_server::send_board(){
   // plateau->ajouterBlock(0,0,0);
   plateau->ajouterBlock(5,0,0);
+  vector<pair<int,int>> board;
+  board.push_back(std::make_pair(5,0));
   // plateau->ajouterBlock(0,5,0);
   // plateau->ajouterBlock(2,2,0);
   // plateau->ajouterBlock(28,7,0);
   // plateau->ajouterBlock(18,4,0);
   auto it = tab.begin();
   while(it != tab.end()){
-    it->second->proto.Board(5,0,0);
+    it->second->proto.Board(board);
     ++it;
   }
 }
@@ -118,17 +120,20 @@ void session_on_server::do_move(int posx,int posy){
   auto it(tab.begin());
   bool move=true;
   int id=0; //à déterminer;
+  cout<<"move"<<endl;
   while(it != tab.end()){
-    if(it->first!=id && joueurs[it->first]->getPosX()==posx && joueurs[it->first]->getPosY()==posy ){
+    if(it->second==this)
+      id=it->first;
+    if(joueurs[it->first]->getPosX()==posx && joueurs[it->first]->getPosY()==posy){
       move=false;
       break;
     }
     it++;
   }
-  if(move){
+  if(move && !plateau->hasBlockOrBomb(posx,posy)){
    it = tab.begin();
    while(it != tab.end()){
-    it->second->proto.Moved(posx,posy,id);
+    it->second->proto.Moved(posx,posy,joueurs[id]->getNick());
     ++it;
   }
 }
