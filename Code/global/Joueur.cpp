@@ -20,11 +20,15 @@ void Joueur::setY(int y){
 	posy=y;
 }
 
+string Joueur::getNick() const{
+	return nick;
+}
+
 Joueur::~Joueur(){
 	if(texture)
 		SDL_FreeSurface(texture);
 }
 
-void Joueur::Afficher(FenetreSDL * ecr){
-
+void Joueur::afficher(FenetreSDL * ecr){
+	ecr->blit(40+posx,60+posy,texture);
 }

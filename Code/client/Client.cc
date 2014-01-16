@@ -25,6 +25,7 @@ namespace bomberman
 
 
   state_t state;
+  pthread_t thread;
   Plateau * plateau;
   Joueur * joueurs[4];
   int n;
@@ -59,75 +60,6 @@ namespace bomberman
 };
 
 
-
-void session_on_client::on_begin(){
-  cout<<"Welcome to the bomberman game, please nick yourself"<<endl;
-  plateau=new Plateau(30,16);
-}
-
-void session_on_client::do_err(string msg){
-  cout<<msg<<endl;
-}
-
-
-void session_on_client::do_joined(string nick){
-  cout<<nick<<" is now waiting for a game"<<endl;
-}
-
-void session_on_client::do_go(){
-  if(state == WAITING_FOR_NICK){
-    cout<<"You are now nicked , waiting for a game room"<<endl;
-    state = WAITING_FOR_GAME;
-  }
-}
-
-
-void session_on_client::do_board(){
-
-}
-
-void session_on_client::do_won(int id){
-
-}
-
-
-void session_on_client::do_moved(int posx,int posy,int id){
-  joueurs[id]->setX(posx);
-  joueurs[id]->setY(posy);
-}
-
-
-void session_on_client::do_explosion(int posx,int posy){
-
-}
-
-void session_on_client::do_bomb(int posx,int posy){
-
-}
-
-
-void session_on_client::do_die(int id){
-
-}
-
-void session_on_client::do_blockbreaked(int posx,int posy){
-  plateau->DetruireBlock(posx,posy);
-}
-
-
-}
-
-
-//enleve les espaces au deux bout d'une chaine
-string strip( string & s)
-{
-
-  size_t i = s. find_first_not_of (" \t");
-  if (i == string :: npos) return "";
-  size_t j = s. find_last_not_of (" \t");
-  return s. substr (i,j-i+1);
-}
-
 void * affichage( void *data )
 {
   bomberman::session_on_client* s = (bomberman::session_on_client*)data;
@@ -153,12 +85,79 @@ void * affichage( void *data )
   }
 }
 
+void session_on_client::on_begin(){
+  cout<<"Welcome to the bomberman game, please nick yourself"<<endl;
+}
+
+void session_on_client::do_err(string msg){
+  cout<<msg<<endl;
+}
+
+
+void session_on_client::do_joined(string nick){
+  cout<<nick<<" is now waiting for a game"<<endl;
+}
+
+void session_on_client::do_go(){
+  if(state == WAITING_FOR_NICK){
+    cout<<"You are now nicked , waiting for a game room"<<endl;
+    plateau=new Plateau(30,16);
+    pthread_create (&thread, NULL, affichage, (void *)this);
+    state = WAITING_FOR_GAME;
+  }
+}
+
+
+void session_on_client::do_board(){
+
+}
+
+void session_on_client::do_won(int id){
+  cout<<joueurs[id]->getNick()+" a gagné !!!"<<endl;
+}
+
+
+void session_on_client::do_moved(int posx,int posy,int id){
+  joueurs[id]->setX(posx);
+  joueurs[id]->setY(posy);
+}
+
+
+void session_on_client::do_explosion(int posx,int posy){
+  plateau->enleverBomb(posx,posy);
+}
+
+void session_on_client::do_bomb(int posx,int posy){
+  plateau->ajouterBombe(posx,posy);
+}
+
+
+void session_on_client::do_die(int id){
+
+}
+
+void session_on_client::do_blockbreaked(int posx,int posy){
+  plateau->DetruireBlock(posx,posy);
+}
+
+
+}
+
+
+//enleve les espaces au deux bout d'une chaine
+string strip( string & s)
+{
+
+  size_t i = s. find_first_not_of (" \t");
+  if (i == string :: npos) return "";
+  size_t j = s. find_last_not_of (" \t");
+  return s. substr (i,j-i+1);
+}
+
 // boucle d’interaction qui utilise les methodes
 // cli. session . cmd_YYY (...) pour executer les
 // commandes saisies par l’utilisateur 
 void interaction_loop(bomberman::session_on_client & s){
-  pthread_t thread;
-  pthread_create (&thread, NULL, affichage, (void *)&s);
   string line;
   while(true){
     cout<<"boucle"<<endl;
@@ -174,7 +173,7 @@ void interaction_loop(bomberman::session_on_client & s){
       s.state = bomberman::WAITING_FOR_NICK;
     }else if(cmd == "/quit"){
       s.proto.Quit();
-      pthread_cancel(thread);
+      pthread_cancel(s.thread);
       break;
     }
   }

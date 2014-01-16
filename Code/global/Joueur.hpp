@@ -16,9 +16,10 @@ public:
 	Joueur(int,int,std::string);
 	int getPosX() const;
 	int getPosY() const;
+	std::string getNick() const;
 	void setX(int);
 	void setY(int);
-	void Afficher(FenetreSDL * ecr);
+	void afficher(FenetreSDL * ecr);
 	~Joueur();
 };
 
