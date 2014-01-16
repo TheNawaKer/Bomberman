@@ -151,7 +151,7 @@ void session_on_client::do_bomb(int posx,int posy){
 
 
 void session_on_client::do_die(int id){
-
+  delete joueurs[id];
 }
 
 void session_on_client::do_blockbreaked(int posx,int posy){
@@ -192,6 +192,7 @@ void interaction_loop(bomberman::session_on_client & s){
     }else if(cmd == "/quit"){
       s.proto.Quit();
       pthread_cancel(s.thread);
+      finish();
       break;
     }
   }

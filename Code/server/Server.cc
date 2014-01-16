@@ -118,7 +118,7 @@ void session_on_server::do_move(int posx,int posy,int id){
   auto it(tab.begin());
   bool move=true;
   while(it != tab.end()){
-    if(it->first!=id && joueurs[it->first]->getPosX()==posx && joueurs[it->first]->getPosY()==posy){
+    if(it->first!=id && joueurs[it->first]->getPosX()==posx && joueurs[it->first]->getPosY()==posy ){
       move=false;
       break;
     }
