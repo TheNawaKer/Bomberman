@@ -46,6 +46,7 @@ namespace bomberman
     proto.Die.sig_recv.connect(EZMETHOD(this,do_die));
     proto.BlockBreaked.sig_recv.connect(EZMETHOD(this,do_blockbreaked));
     proto.Joined.sig_recv.connect(EZMETHOD(this,do_joined));
+    proto.Quit.sig_recv.connect(EZMETHOD(this,do_quit));
   }
 
   void on_begin();
@@ -59,6 +60,7 @@ namespace bomberman
   void do_bomb(int,int);
   void do_die(int);
   void do_blockbreaked(int,int);
+  void do_quit();
 };
 
 
@@ -157,6 +159,10 @@ void session_on_client::do_blockbreaked(int posx,int posy){
   plateau->DetruireBlock(posx,posy);
 }
 
+void session_on_client::do_quit(){
+  proto.Quit();
+  finish();
+}
 
 }
 
@@ -186,6 +192,7 @@ void interaction_loop(bomberman::session_on_client & s){
       if(in.Key(SDLK_RIGHT)){ s.proto.Move(s.joueurs[0]->getPosX()+1,s.joueurs[0]->getPosY()); }
       if(in.Key(SDLK_LEFT)){ s.proto.Move(s.joueurs[0]->getPosX()-1,s.joueurs[0]->getPosY()+1); }
       if(in.Key(SDLK_SPACE)){ s.proto.DropBomb(s.joueurs[0]->getPosX(),s.joueurs[0]->getPosY()); }
+      if(in.Quit()){ s.proto.Quit(); }
     }
 
     cout<<"boucle"<<endl;
