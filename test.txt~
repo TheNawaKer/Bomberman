@@ -1,0 +1,15 @@
+Scanning dependencies of target Bomberman
+[  5%] Building CXX object CMakeFiles/Bomberman.dir/Code/global/BlockFriable.cpp.o
+[ 10%] Building CXX object CMakeFiles/Bomberman.dir/Code/global/BlockIncassable.cpp.o
+[ 15%] Building CXX object CMakeFiles/Bomberman.dir/Code/global/Bomb.cpp.o
+[ 21%] Building CXX object CMakeFiles/Bomberman.dir/Code/global/Joueur.cpp.o
+[ 26%] Building CXX object CMakeFiles/Bomberman.dir/Code/global/FenetreSDL.cpp.o
+/home/adam/Bureau/Bomberman/Bomberman/Code/global/FenetreSDL.cpp: In member function ‘void FenetreSDL::blit(int, int, int, int, SDL_Surface*)’:
+/home/adam/Bureau/Bomberman/Bomberman/Code/global/FenetreSDL.cpp:38:33: erreur: narrowing conversion of ‘x’ from ‘int’ to ‘Sint16 {aka short int}’ inside { } [-fpermissive]
+/home/adam/Bureau/Bomberman/Bomberman/Code/global/FenetreSDL.cpp:38:33: erreur: narrowing conversion of ‘y’ from ‘int’ to ‘Sint16 {aka short int}’ inside { } [-fpermissive]
+/home/adam/Bureau/Bomberman/Bomberman/Code/global/FenetreSDL.cpp:38:33: erreur: narrowing conversion of ‘lsurf’ from ‘int’ to ‘Uint16 {aka short unsigned int}’ inside { } [-fpermissive]
+/home/adam/Bureau/Bomberman/Bomberman/Code/global/FenetreSDL.cpp:38:33: erreur: narrowing conversion of ‘hsurf’ from ‘int’ to ‘Uint16 {aka short unsigned int}’ inside { } [-fpermissive]
+make[2]: *** [CMakeFiles/Bomberman.dir/Code/global/FenetreSDL.cpp.o] Erreur 1
+make[1]: *** [CMakeFiles/Bomberman.dir/all] Erreur 2
+make: *** [all] Erreur 2
+
