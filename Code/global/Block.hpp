@@ -12,6 +12,8 @@ protected:
 	int resistance;
 	SDL_Surface * texture;
 public:
+	Block(int x,int y,int resistance);
+	Block(Block & block);
 	virtual void Briser()=0;
 	virtual void afficher(FenetreSDL * ecr);
 	int getPosX() const;

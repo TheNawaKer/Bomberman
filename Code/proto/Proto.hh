@@ -14,8 +14,8 @@ namespace bomberman
     message<1,void()             > Connected;
     message<2,void(std::string)       > Nick;
     message<3,void(std::string)        > Err;
-    message<4,void()                    > Go;
-    message<5,void()                 > Board;
+    message<4,void(int,int,std::string) > Go;
+    message<5,void(int,int,int)                 > Board;
     message<6,void(int,int,int)       > Move;
     message<7,void(int,int,int)      > Moved;
     message<8,void(int,int)        > DropBomb;
@@ -25,7 +25,7 @@ namespace bomberman
     message<12,void(int,int)          > Bomb;
     message<13,void(int)           > Die;
     message<14,void(int,int)  > BlockBreaked;
-    message<15,void(std::string)    > Joined;
+    message<15,void(int,int,std::string)    > Joined;
 
     proto_bomber(socket& io)
       : protocol<>(io),

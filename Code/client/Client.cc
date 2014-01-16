@@ -48,9 +48,9 @@ namespace bomberman
 
   void on_begin();
   void do_err(string);
-  void do_joined(string);
-  void do_go();
-  void do_board();
+  void do_joined(int,int,string);
+  void do_go(int,int,string);
+  void do_board(int,int,int);
   void do_won(int);
   void do_moved(int,int,int);
   void do_explosion(int,int);
@@ -64,7 +64,6 @@ void * affichage( void *data )
 {
   bomberman::session_on_client* s = (bomberman::session_on_client*)data;
   FenetreSDL fenetre(1280,720);
-  s->plateau->ajouterBlock(0,0,0);
   SDL_Event event;
   bool quit=false;
     //Tant que l'utilisateur n'a pas quitté
@@ -94,22 +93,29 @@ void session_on_client::do_err(string msg){
 }
 
 
-void session_on_client::do_joined(string nick){
+void session_on_client::do_joined(int x,int y,string nick){
   cout<<nick<<" is now waiting for a game"<<endl;
+  int i=1;
+  while(!joueurs[i]){
+    i++;
+  }
+  joueurs[i]=new Joueur(x,y,nick);
 }
 
-void session_on_client::do_go(){
+void session_on_client::do_go(int x,int y,string nick){
   if(state == WAITING_FOR_NICK){
     cout<<"You are now nicked , waiting for a game room"<<endl;
     plateau=new Plateau(30,16);
+    joueurs[0]=new Joueur(x,y,nick);
     pthread_create (&thread, NULL, affichage, (void *)this);
     state = WAITING_FOR_GAME;
   }
 }
 
 
-void session_on_client::do_board(){
-
+void session_on_client::do_board(int x,int y,int type){
+  cout<<"ajout d'un block en "<<x<<","<<y<<endl;
+  plateau->ajouterBlock(x,y,type);
 }
 
 void session_on_client::do_won(int id){

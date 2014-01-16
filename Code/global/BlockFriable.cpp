@@ -1,16 +1,8 @@
 #include "BlockFriable.hpp"
+#include <iostream>
+using namespace std;
 
-BlockFriable::BlockFriable(int x ,int y){
-	posx=x;
-	posy=y;
-	resistance=1;
-	texture=IMG_Load("buisson.png");
-}
-
-BlockFriable::BlockFriable(BlockFriable & block){
-	posx=block.posx;
-	posy=block.posy;
-	resistance=block.resistance;
+BlockFriable::BlockFriable(int x ,int y):Block(x,y,1){
 	texture=IMG_Load("buisson.png");
 }
 

@@ -7,8 +7,7 @@ Plateau::Plateau(int dimx,int dimy):dimx(dimx),dimy(dimy){
 }
 
 void Plateau::ajouterBlock(int x,int y,int type){
-	Block * block = new BlockFriable(x,y);
-	blocks.push_back(block);
+	blocks.push_back(new BlockFriable(x,y));
 }
 
 void Plateau::DetruireBlock(int x,int y){
