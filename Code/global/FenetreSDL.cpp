@@ -35,7 +35,7 @@ int FenetreSDL::getH() const{
 }
 
 void FenetreSDL::blit(int x,int y,int lsurf,int hsurf,SDL_Surface *surf){
-  SDL_Rect rect={x,y,lsurf,hsurf};
+  SDL_Rect rect={static_cast<short int>(x),static_cast<short int>(y),static_cast<short unsigned int>(lsurf),static_cast<short unsigned int>(hsurf)};
   SDL_BlitSurface(surf,NULL,ecr,&rect);
 }
 
