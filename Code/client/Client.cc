@@ -4,6 +4,7 @@
 #include "../global/Joueur.hpp"
 #include <pthread.h>
 #include <iostream>
+#include <sstream>
 using namespace std;
 
 namespace bomberman
@@ -108,7 +109,9 @@ void session_on_client::do_joined(int x,int y,string nick){
   while(joueurs[i]!=NULL){
     i++;
   }
-  joueurs[i]=new Joueur(x,y,nick,"persoD"+i+1);
+  std::ostringstream oss;
+  oss << "persoG" << i+1;
+  joueurs[i]=new Joueur(x,y,nick,oss.str());
 }
 
 void session_on_client::do_go(int x,int y,string nick){

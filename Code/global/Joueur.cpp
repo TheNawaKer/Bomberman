@@ -8,6 +8,7 @@ Joueur::Joueur(int x,int y,string pseudo):posx(x),posy(y),nick(pseudo){
 
 Joueur::Joueur(int x,int y,string pseudo,string img):posx(x),posy(y),nick(pseudo){
 	img+=".png";
+	cout<<img<<endl;
 	texture=IMG_Load(img.c_str());
 }
 
