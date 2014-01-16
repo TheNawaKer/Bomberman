@@ -187,12 +187,13 @@ void interaction_loop(bomberman::session_on_client & s){
 
     if(s.state == bomberman::IN_GAME){
       in.Update();
-      if(in.Key(SDLK_UP)){ s.proto.Move(s.joueurs[0]->getPosX(),s.joueurs[0]->getPosY()+1); }
-      if(in.Key(SDLK_DOWN)){ s.proto.Move(s.joueurs[0]->getPosX(),s.joueurs[0]->getPosY()-1); }
-      if(in.Key(SDLK_RIGHT)){ s.proto.Move(s.joueurs[0]->getPosX()+1,s.joueurs[0]->getPosY()); }
-      if(in.Key(SDLK_LEFT)){ s.proto.Move(s.joueurs[0]->getPosX()-1,s.joueurs[0]->getPosY()+1); }
-      if(in.Key(SDLK_SPACE)){ s.proto.DropBomb(s.joueurs[0]->getPosX(),s.joueurs[0]->getPosY()); }
+      if(in.Key(SDLK_UP)){ in.Key(SDLK_UP)=0; s.proto.Move(s.joueurs[0]->getPosX(),s.joueurs[0]->getPosY()+1); }
+      if(in.Key(SDLK_DOWN)){ in.Key(SDLK_DOWN)=0; s.proto.Move(s.joueurs[0]->getPosX(),s.joueurs[0]->getPosY()-1); }
+      if(in.Key(SDLK_RIGHT)){ in.Key(SDLK_RIGHT)=0; s.proto.Move(s.joueurs[0]->getPosX()+1,s.joueurs[0]->getPosY()); }
+      if(in.Key(SDLK_LEFT)){ in.Key(SDLK_LEFT)=0; s.proto.Move(s.joueurs[0]->getPosX()-1,s.joueurs[0]->getPosY()+1); }
+      if(in.Key(SDLK_SPACE)){ in.Key(SDLK_SPACE)=0; s.proto.DropBomb(s.joueurs[0]->getPosX(),s.joueurs[0]->getPosY()); }
       if(in.Quit()){ s.proto.Quit(); }
+      
     }
 
     cout<<"boucle"<<endl;
