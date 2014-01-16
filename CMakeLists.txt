@@ -4,7 +4,7 @@ cmake_minimum_required(VERSION 2.6)
 set (PROJ Bomberman)
 
 ADD_DEFINITIONS(-std=c++0x)
-
+ADD_DEFINITIONS(-g)
 # Nom du projet
 project(${PROJ} C CXX)
 
@@ -84,6 +84,7 @@ add_executable(
 add_executable(
     ${SER}
     ${source_files_server}
+    ${source_files_global}
     ${source_files_proto}
 )
 
@@ -113,4 +114,7 @@ target_link_libraries(
 	-lboost_program_options-mt
 	-lpthread
     -lnetez
+    ${SDL_LIBRARY}
+    ${SDLIMAGE_LIBRARY}
+    ${SDLTTF_LIBRARY}
 )

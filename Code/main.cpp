@@ -5,7 +5,7 @@ using namespace std;
 
 int main(){
 	FenetreSDL fenetre(1280,720);
-	Plateau plateau;
+	Plateau plateau(30,16);
 	plateau.afficher(&fenetre);
 	fenetre.flip();
 	int i;
