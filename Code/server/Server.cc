@@ -176,15 +176,66 @@ void session_on_server::do_dropbomb(int posx,int posy){
 
 void session_on_server::do_explode(int x,int y){
   if(bomb){
-    if(bomb->getPosX()==x && bomb->getPosY()){
+    // si la bombe 
+    if(bomb->getPosX()== x && bomb->getPosY()== y){
      auto it = tab.begin();
      while(it != tab.end()){
+
       it->second->proto.Explosion(x,y);
       ++it;
     }
      delete bomb;
      bomb=NULL;
      plateau->enleverBomb(x,y);
+
+     //gestion l'explosion vers la gauche
+     int rayon = bomb->getRayon();
+     for(int i =x; i >= 0 && i >= x-rayon; ++i){ 
+      if(plateau->hasBlockOrBomb(i,y)){ 
+        auto it = tab.begin();
+        while(it != tab.end()){
+          it->second->proto.BlockBreaked(i,y);
+        }
+      }
+    }
+
+
+         //gestion l'explosion vers la droite
+
+     for(int i =x; i <= 29 && i <= x+rayon; ++i){ 
+      if(plateau->hasBlockOrBomb(i,y)){ 
+        auto it = tab.begin();
+        while(it != tab.end()){
+          it->second->proto.BlockBreaked(i,y);
+        }
+      }
+    }
+
+             //gestion l'explosion vers le haut
+
+     for(int i =y; i >= 0 && i >= x-rayon; ++i){ 
+      if(plateau->hasBlockOrBomb(x,i)){ 
+        auto it = tab.begin();
+        while(it != tab.end()){
+          it->second->proto.BlockBreaked(x,i);
+        }
+      }
+    }
+
+                 //gestion l'explosion vers le bas
+
+     for(int i =y; i <= 15  && i <= x+rayon; ++i){ 
+      if(plateau->hasBlockOrBomb(x,i)){ 
+        auto it = tab.begin();
+        while(it != tab.end()){
+          it->second->proto.BlockBreaked(x,i);
+        }
+      }
+    }
+
+
+
+
   }
 
 }

@@ -16,6 +16,7 @@ public:
 	Bomb(Bomb &);
 	int getPosX() const;
 	int getPosY() const;
+	int getRayon() const;
 	~Bomb();
 	void afficher(FenetreSDL * ecr);
 };

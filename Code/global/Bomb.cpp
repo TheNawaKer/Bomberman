@@ -33,3 +33,7 @@ void Bomb::afficher(FenetreSDL * ecr){
 	if(texture)
 		ecr->blit(40+posx*40,60+posy*40,texture);
 }
+
+int Bomb::getRayon()const{
+	return rayon;
+}
