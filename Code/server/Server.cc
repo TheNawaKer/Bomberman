@@ -23,19 +23,22 @@ namespace bomberman
     void do_quit();
     void do_move(int,int);
     void do_dropbomb(int,int);
-    void send_board();
+    vector<pair<int,int>> send_board();
   };
 
   ezmutex the_mutex;
   map<int,session_on_server*> tab;
   Joueur * joueurs[4];
   Plateau * plateau;
+  Bomb * bomb;
   int nb;
 
 
   void init(){
     nb=0;
+    bomb=NULL;
     plateau=new Plateau(30,15);
+    plateau->ajouterBlock(5,0,0);
     cout<<"Demarrage du serveur"<<endl;
   }
 
@@ -54,7 +57,7 @@ namespace bomberman
     if(!find && nb<4){
      tab[nb]=this;
 
-  int x,y;
+     int x,y;
     //attribution de la position de départ en fonction du numéro du joueur
      switch(nb){
       case 0:
@@ -84,16 +87,24 @@ namespace bomberman
       if(it->first != nb) it->second->proto.Joined(x,y,nick);
       ++it;
     }
-    it=tab.find(nb);
     for(int i=0;i<nb;i++){
       proto.Joined(joueurs[i]->getPosX(),joueurs[i]->getPosY(),joueurs[i]->getNick());
     }
-    if(nb>=1) 
-      send_board();
-    nb++;
+    if(nb==1) 
+    {  
+      auto it = tab.begin();
+      while(it != tab.end()){
+        it->second->proto.Board(send_board());
+        ++it;
+      }
+    }
+    else if(nb>1){
+     proto.Board(send_board());
+   }
+   nb++;
 
-  }
-  else proto.Err("#error# This nick is already used.");
+ }
+ else proto.Err("#error# This nick is already used.");
 }
 
 void session_on_server::do_quit(){
@@ -101,20 +112,13 @@ void session_on_server::do_quit(){
   finish();
 }
 
-void session_on_server::send_board(){
-  // plateau->ajouterBlock(0,0,0);
-  plateau->ajouterBlock(5,0,0);
+vector<pair<int,int>> session_on_server::send_board(){
   vector<pair<int,int>> board;
-  board.push_back(std::make_pair(5,0));
-  // plateau->ajouterBlock(0,5,0);
-  // plateau->ajouterBlock(2,2,0);
-  // plateau->ajouterBlock(28,7,0);
-  // plateau->ajouterBlock(18,4,0);
-  auto it = tab.begin();
-  while(it != tab.end()){
-    it->second->proto.Board(board);
-    ++it;
+  for(int i=0;i<plateau->getNbBlock();i++){
+    board.push_back(std::make_pair(plateau->getBlock(i)->getPosX(),plateau->getBlock(i)->getPosY()));
   }
+  return board;
+
 }
 
 void session_on_server::do_move(int posx,int posy){
@@ -144,16 +148,19 @@ void session_on_server::do_move(int posx,int posy){
 }
 
 void session_on_server::do_dropbomb(int posx,int posy){
-  //on ajoute la bombe
-  plateau->ajouterBombe(posx,posy);
+  if(bomb==NULL){
+      //on ajoute la bombe
+    plateau->ajouterBombe(posx,posy);
+    bomb=plateau->getBomb(plateau->getNbBomb()-1);
+    //on envoie le position de la bombe à tout les joueurs
 
-  //on envoie le position de la bombe à tout les joueurs
-
-  auto it = tab.begin();
-   while(it != tab.end()){
-    it->second->proto.Bomb(posx,posy);
-    ++it;
+    auto it = tab.begin();
+    while(it != tab.end()){
+      it->second->proto.Bomb(posx,posy);
+      ++it;
+    }
   }
+
 }
 
 

@@ -24,6 +24,10 @@ public:
 	void ajouterBombe(int x,int y);
 	void enleverBomb(int x,int y);
 	bool hasBlockOrBomb(int x,int y) const;
+	int getNbBlock() const;
+	Block * getBlock(int i);
+	int getNbBomb() const;
+	Bomb * getBomb(int i);
 	~Plateau();
 	void afficher(FenetreSDL * ecr);
 };

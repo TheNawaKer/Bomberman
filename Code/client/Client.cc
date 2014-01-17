@@ -71,7 +71,6 @@ void * affichage( void *data )
   bomberman::session_on_client* s = (bomberman::session_on_client*)data;
   FenetreSDL fenetre(1280,720);
   Input in;
-  s->plateau->ajouterBombe(3,3);
     //Tant que l'utilisateur n'a pas quitté
   while(!s->quit)
   {
@@ -213,7 +212,6 @@ void interaction_loop(bomberman::session_on_client & s){
   string line;
   s.quit=false;
   while(!s.quit){
-    cout<<"boucle"<<endl;
     getline(cin,line);
     string cmd;
     istringstream is(line);

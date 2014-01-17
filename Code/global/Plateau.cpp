@@ -54,6 +54,23 @@ bool Plateau::hasBlockOrBomb(int x,int y) const{
 	return false;
 }
 
+int Plateau::getNbBlock() const{
+	return blocks.size();
+}
+
+Block * Plateau::getBlock(int i){
+	return blocks[i];
+}
+
+int Plateau::getNbBomb() const{
+	return bombs.size();
+}
+
+Bomb * Plateau::getBomb(int i){
+	return bombs[i];
+}
+
+
 Plateau::~Plateau(){
 	if(background)
 		SDL_FreeSurface(background);
