@@ -115,14 +115,14 @@ void session_on_client::do_joined(int x,int y,string nick){
     i++;
   }
   std::ostringstream oss;
-  oss << "persoG" << i+1;
+  oss << "persos/persoG" << i+1;
   joueurs[i]=new Joueur(x,y,nick,oss.str());
 }
 
 void session_on_client::do_go(int x,int y,string nick){
   if(state == WAITING_FOR_NICK){
-    cout<<"You are now nicked , waiting for a game room"<<endl;
-    joueurs[0]=new Joueur(x,y,nick,"persoD1");
+    cout<<"You are now nicked as "<<nick<<" , waiting for a game room"<<endl;
+    joueurs[0]=new Joueur(x,y,nick,"persos/persoD1");
     state = WAITING_FOR_GAME;
   }
 }
