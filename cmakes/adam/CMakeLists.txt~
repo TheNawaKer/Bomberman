@@ -69,7 +69,7 @@ file(
 add_executable(
     ${BINNAME}
     ${source_files_global}
-    ../../Code/main.cpp
+    Code/main.cpp
 )
 
 # Déclaration de l'exécutable

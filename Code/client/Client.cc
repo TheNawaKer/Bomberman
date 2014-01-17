@@ -26,7 +26,6 @@ namespace bomberman
  struct session_on_client: public session_base
  {
 
-
   state_t state;
   pthread_t thread;
   Plateau * plateau;
