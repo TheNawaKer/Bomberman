@@ -85,9 +85,9 @@ namespace bomberman
     }
     it=tab.find(nb);
     for(int i=0;i<nb;i++){
-        proto.Joined(joueurs[i]->getPosX(),joueurs[i]->getPosY(),joueurs[i]->getNick());
+      proto.Joined(joueurs[i]->getPosX(),joueurs[i]->getPosY(),joueurs[i]->getNick());
     }
-    if(nb==1) 
+    if(nb>=3) 
       send_board();
     nb++;
 
@@ -117,10 +117,10 @@ void session_on_server::send_board(){
 }
 
 void session_on_server::do_move(int posx,int posy){
-  auto it(tab.begin());
-  bool move=true;
+  if((posx>=0 && posx<=30)&&(posy>=0 && posy<=15)){
+    auto it(tab.begin());
+    bool move=true;
   int id=0; //à déterminer;
-  cout<<"move"<<endl;
   while(it != tab.end()){
     if(it->second==this)
       id=it->first;
@@ -138,8 +138,10 @@ void session_on_server::do_move(int posx,int posy){
   }
 }
 }
+}
 
 void session_on_server::do_dropbomb(int posx,int posy){
+
 }
 
 

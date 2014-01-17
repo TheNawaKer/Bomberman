@@ -31,8 +31,7 @@ namespace bomberman
   pthread_t thread;
   Plateau * plateau;
   Joueur * joueurs[4];
-  int n;
-  int i;
+  bool quit;
 
   session_on_client(socket& io): session_base(io), state(BEGIN)
   {
@@ -59,7 +58,7 @@ namespace bomberman
   void do_moved(int,int,string);
   void do_explosion(int,int);
   void do_bomb(int,int);
-  void do_die(int);
+  void do_die(string);
   void do_blockbreaked(int,int);
   void do_quit();
 };
@@ -69,10 +68,9 @@ void * affichage( void *data )
 {
   bomberman::session_on_client* s = (bomberman::session_on_client*)data;
   FenetreSDL fenetre(1280,720);
-  SDL_Event event;
-  bool quit=false;
+  Input in;
     //Tant que l'utilisateur n'a pas quitté
-  while(!quit)
+  while(!s->quit)
   {
     s->plateau->afficher(&fenetre);
     for(int i=0;i<4;i++){
@@ -83,14 +81,15 @@ void * affichage( void *data )
 
     fenetre.flip();
         //Tant qu'il y a un événement
-    while( SDL_PollEvent( &event ) )
-    {
-            //Si l'utilisateur a cliqué sur le X de la fenêtre
-      if( event.type == SDL_QUIT )
-      {
-                //On quitte the programme
-        quit=true;
-      }
+    if(s->state == bomberman::IN_GAME){
+      in.Update();
+      if(in.Key(SDLK_UP)){ in.Key(SDLK_UP)=0; s->proto.Move(s->joueurs[0]->getPosX(),s->joueurs[0]->getPosY()-1); }
+      if(in.Key(SDLK_DOWN)){ in.Key(SDLK_DOWN)=0; s->proto.Move(s->joueurs[0]->getPosX(),s->joueurs[0]->getPosY()+1); }
+      if(in.Key(SDLK_RIGHT)){ in.Key(SDLK_RIGHT)=0; s->proto.Move(s->joueurs[0]->getPosX()+1,s->joueurs[0]->getPosY()); }
+      if(in.Key(SDLK_LEFT)){ in.Key(SDLK_LEFT)=0; s->proto.Move(s->joueurs[0]->getPosX()-1,s->joueurs[0]->getPosY()); }
+      if(in.Key(SDLK_SPACE)){ in.Key(SDLK_SPACE)=0; s->proto.DropBomb(s->joueurs[0]->getPosX(),s->joueurs[0]->getPosY()); }
+      if(in.Quit()){ s->proto.Quit(); s->quit=true; }
+      
     }
   }
 }
@@ -133,7 +132,7 @@ void session_on_client::do_board(vector<pair<int,int>> board){
     cout<<"ajout d'un block en "<<board[i].first<<","<<board[i].second<<endl;
     plateau->ajouterBlock(board[i].first,board[i].second,0);
   }
-  pthread_create (&thread, NULL, affichage, (void *)this);
+  pthread_create(&thread, NULL, affichage, (void *)this);
   state=IN_GAME;
 
   
@@ -165,8 +164,15 @@ void session_on_client::do_bomb(int posx,int posy){
 }
 
 
-void session_on_client::do_die(int id){
-  delete joueurs[id];
+void session_on_client::do_die(string nick){
+  if(joueurs[0]->getNick()==nick)
+      state = DEAD;
+  for(int i=0;i<4;i++){
+    if(joueurs[i]->getNick()==nick){
+      delete joueurs[i];
+      break;
+    }
+  }
 }
 
 void session_on_client::do_blockbreaked(int posx,int posy){
@@ -196,20 +202,8 @@ string strip( string & s)
 // commandes saisies par l’utilisateur 
 void interaction_loop(bomberman::session_on_client & s){
   string line;
-  Input in;
-  while(true){
-
-    if(s.state == bomberman::IN_GAME){
-      in.Update();
-      if(in.Key(SDLK_UP)){ in.Key(SDLK_UP)=0; s.proto.Move(s.joueurs[0]->getPosX(),s.joueurs[0]->getPosY()+1); }
-      if(in.Key(SDLK_DOWN)){ in.Key(SDLK_DOWN)=0; s.proto.Move(s.joueurs[0]->getPosX(),s.joueurs[0]->getPosY()-1); }
-      if(in.Key(SDLK_RIGHT)){ in.Key(SDLK_RIGHT)=0; s.proto.Move(s.joueurs[0]->getPosX()+1,s.joueurs[0]->getPosY()); }
-      if(in.Key(SDLK_LEFT)){ in.Key(SDLK_LEFT)=0; s.proto.Move(s.joueurs[0]->getPosX()-1,s.joueurs[0]->getPosY()+1); }
-      if(in.Key(SDLK_SPACE)){ in.Key(SDLK_SPACE)=0; s.proto.DropBomb(s.joueurs[0]->getPosX(),s.joueurs[0]->getPosY()); }
-      if(in.Quit()){ s.proto.Quit(); }
-      
-    }
-
+  s.quit=false;
+  while(!s.quit){
     cout<<"boucle"<<endl;
     getline(cin,line);
     string cmd;
@@ -223,10 +217,11 @@ void interaction_loop(bomberman::session_on_client & s){
       s.state = bomberman::WAITING_FOR_NICK;
     }else if(cmd == "/quit"){
       s.proto.Quit();
-      pthread_cancel(s.thread);
+      s.quit=true;
       break;
     }
-  }
+}
+  pthread_join(s.thread,NULL);
 }
 
 

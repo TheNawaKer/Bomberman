@@ -25,7 +25,7 @@ namespace bomberman
     message<10,void()                 > Quit;
     message<11,void(int,int)     > Explosion;
     message<12,void(int,int)          > Bomb;
-    message<13,void(int)           > Die;
+    message<13,void(std::string)           > Die;
     message<14,void(int,int)  > BlockBreaked;
     message<15,void(int,int,std::string)    > Joined;
 
