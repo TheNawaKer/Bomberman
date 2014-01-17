@@ -108,11 +108,14 @@ namespace bomberman
 }
 
 void session_on_server::do_quit(){
+  ezlock hold(the_mutex);
   //nettoyage map
   finish();
 }
 
 vector<pair<int,int>> session_on_server::send_board(){
+  ezlock hold(the_mutex);
+  
   vector<pair<int,int>> board;
   for(int i=0;i<plateau->getNbBlock();i++){
     board.push_back(std::make_pair(plateau->getBlock(i)->getPosX(),plateau->getBlock(i)->getPosY()));
@@ -122,6 +125,8 @@ vector<pair<int,int>> session_on_server::send_board(){
 }
 
 void session_on_server::do_move(int posx,int posy){
+  ezlock hold(the_mutex);
+
   // entre la case 0 et la case 30
   if((posx>=0 && posx<=30)&&(posy>=0 && posy<=15)){
     auto it(tab.begin());
@@ -148,6 +153,8 @@ void session_on_server::do_move(int posx,int posy){
 }
 
 void session_on_server::do_dropbomb(int posx,int posy){
+  ezlock hold(the_mutex);
+
   if(bomb==NULL){
       //on ajoute la bombe
     plateau->ajouterBombe(posx,posy);
