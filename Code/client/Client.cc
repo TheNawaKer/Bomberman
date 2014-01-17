@@ -47,6 +47,7 @@ namespace bomberman
     proto.BlockBreaked.sig_recv.connect(EZMETHOD(this,do_blockbreaked));
     proto.Joined.sig_recv.connect(EZMETHOD(this,do_joined));
     proto.Quit.sig_recv.connect(EZMETHOD(this,do_quit));
+    sig_end.connect(EZMETHOD(this,on_end));
   }
 
   void on_begin();
@@ -61,6 +62,7 @@ namespace bomberman
   void do_die(string);
   void do_blockbreaked(int,int);
   void do_quit();
+  void on_end();
 };
 
 
@@ -184,6 +186,12 @@ void session_on_client::do_quit(){
   finish();
 }
 
+void session_on_client::on_end(){
+  pthread_join(thread,NULL);
+  proto.Quit();
+ finish(); 
+}
+
 }
 
 
@@ -221,7 +229,7 @@ void interaction_loop(bomberman::session_on_client & s){
       break;
     }
 }
-  pthread_join(s.thread,NULL);
+
 }
 
 
