@@ -88,7 +88,7 @@ namespace bomberman
     for(int i=0;i<nb;i++){
       proto.Joined(joueurs[i]->getPosX(),joueurs[i]->getPosY(),joueurs[i]->getNick());
     }
-    if(nb>=3) 
+    if(nb>=1) 
       send_board();
     nb++;
 

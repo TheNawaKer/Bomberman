@@ -13,7 +13,7 @@ class Plateau{
 private:
 	SDL_Surface * background;
 	std::vector<Block *> blocks;
-	std::vector<Bomb> bombs;
+	std::vector<Bomb *> bombs;
 	int dimx;
 	int dimy;
 	//Joueur * joueur[4];

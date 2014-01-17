@@ -5,7 +5,7 @@ using namespace std;
 Block::Block(int x,int y, int res):posx(x),posy(y),resistance(res){}
 
 Block::Block(Block & block):posx(block.posx),posy(block.posy),resistance(block.resistance){
-	texture=IMG_Load("buisson.png");
+	texture=IMG_Load("../ressources/game/buisson.png");
 }
 
 int Block::getPosX() const{

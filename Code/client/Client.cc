@@ -71,6 +71,7 @@ void * affichage( void *data )
   bomberman::session_on_client* s = (bomberman::session_on_client*)data;
   FenetreSDL fenetre(1280,720);
   Input in;
+  s->plateau->ajouterBombe(3,3);
     //Tant que l'utilisateur n'a pas quitté
   while(!s->quit)
   {
@@ -115,14 +116,14 @@ void session_on_client::do_joined(int x,int y,string nick){
     i++;
   }
   std::ostringstream oss;
-  oss << "persos/persoG" << i+1;
+  oss << "G" << i+1;
   joueurs[i]=new Joueur(x,y,nick,oss.str());
 }
 
 void session_on_client::do_go(int x,int y,string nick){
   if(state == WAITING_FOR_NICK){
     cout<<"You are now nicked as "<<nick<<" , waiting for a game room"<<endl;
-    joueurs[0]=new Joueur(x,y,nick,"persos/persoD1");
+    joueurs[0]=new Joueur(x,y,nick,"D1");
     state = WAITING_FOR_GAME;
   }
 }

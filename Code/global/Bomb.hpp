@@ -13,10 +13,11 @@ private:
 public:
 	Bomb(int,int);
 	Bomb(int,int,int);
+	Bomb(Bomb &);
 	int getPosX() const;
 	int getPosY() const;
 	~Bomb();
-	void Afficher(FenetreSDL * ecr);
+	void afficher(FenetreSDL * ecr);
 };
 
 #endif
