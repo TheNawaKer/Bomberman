@@ -142,7 +142,7 @@ void session_on_client::do_board(vector<pair<int,int>> board){
 }
 
 void session_on_client::do_won(int id){
-  cout<<joueurs[id]->getNick()+" a gagné !!!"<<endl;
+  cout<<joueurs[id]->getNick()<<" a gagné !!!"<<endl;
 }
 
 
