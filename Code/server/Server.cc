@@ -184,13 +184,11 @@ void session_on_server::do_explode(int x,int y){
       it->second->proto.Explosion(x,y);
       ++it;
     }
-     delete bomb;
-     bomb=NULL;
      plateau->enleverBomb(x,y);
 
      //gestion l'explosion vers la gauche
      int rayon = bomb->getRayon();
-     for(int i =x; i >= 0 && i >= x-rayon; ++i){ 
+     for(int i =x; i >= 0 && i >= x-rayon; --i){ 
       if(plateau->hasBlockOrBomb(i,y)){ 
         auto it = tab.begin();
         while(it != tab.end()){
@@ -213,7 +211,7 @@ void session_on_server::do_explode(int x,int y){
 
              //gestion l'explosion vers le haut
 
-     for(int i =y; i >= 0 && i >= x-rayon; ++i){ 
+     for(int i =y; i >= 0 && i >= y-rayon; --i){ 
       if(plateau->hasBlockOrBomb(x,i)){ 
         auto it = tab.begin();
         while(it != tab.end()){
@@ -232,10 +230,8 @@ void session_on_server::do_explode(int x,int y){
         }
       }
     }
-
-
-
-
+     delete bomb;
+     bomb=NULL;
   }
 
 }
