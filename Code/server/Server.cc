@@ -41,7 +41,13 @@ namespace bomberman
   void init(){
     nb=0;
     plateau=new Plateau(30,15);
-    plateau->ajouterBlock(5,0,0);
+    plateau->ajouterBlock(5,1,0);
+    plateau->ajouterBlock(5,2,0);
+    plateau->ajouterBlock(10,9,0);
+    plateau->ajouterBlock(20,7,0);
+    plateau->ajouterBlock(4,9,0);
+    plateau->ajouterBlock(5,13,0);
+    plateau->ajouterBlock(9,9,0);
     cout<<"Demarrage du serveur"<<endl;
   }
 
