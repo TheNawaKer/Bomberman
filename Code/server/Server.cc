@@ -132,7 +132,7 @@ void session_on_server::do_move(int posx,int posy){
   ezlock hold(the_mutex);
 
   // entre la case 0 et la case 30
-  if((posx>=0 && posx<30)&&(posy>=0 && posy<=15)){
+  if((posx>=0 && posx<30)&&(posy>=0 && posy<15)){
     auto it(tab.begin());
     bool move=true;
   int id=0; //à déterminer;
@@ -175,6 +175,7 @@ void session_on_server::do_dropbomb(int posx,int posy){
 }
 
 void session_on_server::do_explode(int x,int y){
+  ezlock hold(the_mutex);
   if(bomb){
     // si la bombe 
     if(bomb->getPosX()== x && bomb->getPosY()== y){
@@ -184,54 +185,54 @@ void session_on_server::do_explode(int x,int y){
       it->second->proto.Explosion(x,y);
       ++it;
     }
-     plateau->enleverBomb(x,y);
 
-     //gestion l'explosion vers la gauche
-     int rayon = bomb->getRayon();
-     for(int i =x; i >= 0 && i >= x-rayon; --i){ 
-      if(plateau->hasBlockOrBomb(i,y)){ 
-        auto it = tab.begin();
-        while(it != tab.end()){
-          it->second->proto.BlockBreaked(i,y);
-        }
-      }
-    }
+    //  //gestion l'explosion vers la gauche
+    //  int rayon = bomb->getRayon();
+    //  for(int i =x; i >= 0 && i >= x-rayon; --i){ 
+    //   if(plateau->hasBlockOrBomb(i,y)){ 
+    //     auto it = tab.begin();
+    //     while(it != tab.end()){
+    //       it->second->proto.BlockBreaked(i,y);
+    //     }
+    //   }
+    // }
 
 
-         //gestion l'explosion vers la droite
+    //      //gestion l'explosion vers la droite
 
-     for(int i =x; i <= 29 && i <= x+rayon; ++i){ 
-      if(plateau->hasBlockOrBomb(i,y)){ 
-        auto it = tab.begin();
-        while(it != tab.end()){
-          it->second->proto.BlockBreaked(i,y);
-        }
-      }
-    }
+    //  for(int i =x; i <= 29 && i <= x+rayon; ++i){ 
+    //   if(plateau->hasBlockOrBomb(i,y)){ 
+    //     auto it = tab.begin();
+    //     while(it != tab.end()){
+    //       it->second->proto.BlockBreaked(i,y);
+    //     }
+    //   }
+    // }
 
-             //gestion l'explosion vers le haut
+    //          //gestion l'explosion vers le haut
 
-     for(int i =y; i >= 0 && i >= y-rayon; --i){ 
-      if(plateau->hasBlockOrBomb(x,i)){ 
-        auto it = tab.begin();
-        while(it != tab.end()){
-          it->second->proto.BlockBreaked(x,i);
-        }
-      }
-    }
+    //  for(int i =y; i >= 0 && i >= y-rayon; --i){ 
+    //   if(plateau->hasBlockOrBomb(x,i)){ 
+    //     auto it = tab.begin();
+    //     while(it != tab.end()){
+    //       it->second->proto.BlockBreaked(x,i);
+    //     }
+    //   }
+    // }
 
-                 //gestion l'explosion vers le bas
+    //              //gestion l'explosion vers le bas
 
-     for(int i =y; i <= 15  && i <= x+rayon; ++i){ 
-      if(plateau->hasBlockOrBomb(x,i)){ 
-        auto it = tab.begin();
-        while(it != tab.end()){
-          it->second->proto.BlockBreaked(x,i);
-        }
-      }
-    }
+    //  for(int i =y; i <= 15  && i <= x+rayon; ++i){ 
+    //   if(plateau->hasBlockOrBomb(x,i)){ 
+    //     auto it = tab.begin();
+    //     while(it != tab.end()){
+    //       it->second->proto.BlockBreaked(x,i);
+    //     }
+    //   }
+    // }
      delete bomb;
      bomb=NULL;
+    plateau->enleverBomb(x,y);
   }
 
 }
