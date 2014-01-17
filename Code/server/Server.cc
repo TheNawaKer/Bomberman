@@ -12,6 +12,9 @@ namespace bomberman
 
   struct session_on_server: public session_base
   {
+
+    Bomb * bomb;
+
     session_on_server(socket& io): session_base(io)
     {
       proto.Nick.sig_recv.connect(EZMETHOD(this,do_nick));
@@ -32,13 +35,11 @@ namespace bomberman
   map<int,session_on_server*> tab;
   Joueur * joueurs[4];
   Plateau * plateau;
-  Bomb * bomb;
   int nb;
 
 
   void init(){
     nb=0;
-    bomb=NULL;
     plateau=new Plateau(30,15);
     plateau->ajouterBlock(5,0,0);
     cout<<"Demarrage du serveur"<<endl;
@@ -47,6 +48,7 @@ namespace bomberman
   void session_on_server::do_nick(string nick){
     ezlock hold(the_mutex);
     bool find=false;
+    bomb=NULL;
     for(int i=0;i<nb;i++){
       if(joueurs[i]){
         if(joueurs[i]->getNick()==nick){
@@ -130,7 +132,7 @@ void session_on_server::do_move(int posx,int posy){
   ezlock hold(the_mutex);
 
   // entre la case 0 et la case 30
-  if((posx>=0 && posx<=30)&&(posy>=0 && posy<=15)){
+  if((posx>=0 && posx<30)&&(posy>=0 && posy<=15)){
     auto it(tab.begin());
     bool move=true;
   int id=0; //à déterminer;
