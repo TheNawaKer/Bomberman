@@ -31,6 +31,7 @@ namespace bomberman
   pthread_t thread;
   Plateau * plateau;
   Joueur * joueurs[4];
+  Bomb * bomb;
   bool quit;
 
   session_on_client(socket& io): session_base(io), state(BEGIN)
@@ -89,7 +90,13 @@ void * affichage( void *data )
       if(in.Key(SDLK_DOWN)){ in.Key(SDLK_DOWN)=0; s->proto.Move(s->joueurs[0]->getPosX(),s->joueurs[0]->getPosY()+1); }
       if(in.Key(SDLK_RIGHT)){ in.Key(SDLK_RIGHT)=0; s->proto.Move(s->joueurs[0]->getPosX()+1,s->joueurs[0]->getPosY()); }
       if(in.Key(SDLK_LEFT)){ in.Key(SDLK_LEFT)=0; s->proto.Move(s->joueurs[0]->getPosX()-1,s->joueurs[0]->getPosY()); }
-      if(in.Key(SDLK_SPACE)){ in.Key(SDLK_SPACE)=0; s->proto.DropBomb(s->joueurs[0]->getPosX(),s->joueurs[0]->getPosY()); }
+      if(in.Key(SDLK_RETURN) && s->bomb!=NULL){
+        in.Key(SDLK_RETURN)=0; s->proto.Explosion(s->bomb->getPosX(),s->bomb->getPosY()); 
+      }
+      if(in.Key(SDLK_SPACE) && s->bomb==NULL){ 
+        in.Key(SDLK_SPACE)=0; s->proto.DropBomb(s->joueurs[0]->getPosX(),s->joueurs[0]->getPosY());
+        s->bomb=new Bomb(s->joueurs[0]->getPosX(),s->joueurs[0]->getPosY()); 
+      }
       if(in.Quit()){ s->proto.Quit(); s->quit=true; }
       
     }
@@ -101,6 +108,7 @@ void session_on_client::on_begin(){
   for(int i=0;i<4;i++){
     joueurs[i]=NULL;
   }
+  bomb=NULL;
 }
 
 void session_on_client::do_err(string msg){
@@ -159,6 +167,12 @@ void session_on_client::do_moved(int posx,int posy,string nick){
 
 void session_on_client::do_explosion(int posx,int posy){
   plateau->enleverBomb(posx,posy);
+  if(bomb){
+    if(bomb->getPosX()==posx && bomb->getPosY()==posy){
+      delete bomb;
+      bomb=NULL;
+    }
+  }
 }
 
 void session_on_client::do_bomb(int posx,int posy){

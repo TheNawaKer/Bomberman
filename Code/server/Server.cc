@@ -18,11 +18,13 @@ namespace bomberman
       proto.Quit.sig_recv.connect(EZMETHOD(this,do_quit));
       proto.Move.sig_recv.connect(EZMETHOD(this,do_move));
       proto.DropBomb.sig_recv.connect(EZMETHOD(this,do_dropbomb));
+      proto.Explosion.sig_recv.connect(EZMETHOD(this,do_explode));
     }
     void do_nick(string s);
     void do_quit();
     void do_move(int,int);
     void do_dropbomb(int,int);
+    void do_explode(int,int);
     vector<pair<int,int>> send_board();
   };
 
@@ -151,7 +153,7 @@ void session_on_server::do_dropbomb(int posx,int posy){
   if(bomb==NULL){
       //on ajoute la bombe
     plateau->ajouterBombe(posx,posy);
-    bomb=plateau->getBomb(plateau->getNbBomb()-1);
+    bomb=new Bomb(posx,posy);
     //on envoie le position de la bombe à tout les joueurs
 
     auto it = tab.begin();
@@ -160,6 +162,23 @@ void session_on_server::do_dropbomb(int posx,int posy){
       ++it;
     }
   }
+
+}
+
+void session_on_server::do_explode(int x,int y){
+  if(bomb){
+    if(bomb->getPosX()==x && bomb->getPosY()){
+     auto it = tab.begin();
+     while(it != tab.end()){
+      it->second->proto.Explosion(x,y);
+      ++it;
+    }
+     delete bomb;
+     bomb=NULL;
+     plateau->enleverBomb(x,y);
+  }
+
+}
 
 }
 
