@@ -119,7 +119,7 @@ void session_on_client::do_joined(int x,int y,string nick){
 
 void session_on_client::do_go(int x,int y,string nick){
   if(state == WAITING_FOR_NICK){
-    cout<<"You are now nicked , waiting for a game room"<<endl;
+    cout<<"You are now nicked as "<<nick<<" , waiting for a game room"<<endl;
     joueurs[0]=new Joueur(x,y,nick,"persos/persoD1");
     state = WAITING_FOR_GAME;
   }
