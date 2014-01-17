@@ -53,8 +53,9 @@ namespace bomberman
 
     if(!find && nb<4){
      tab[nb]=this;
-     int x,y;
 
+  int x,y;
+    //attribution de la position de départ en fonction du numéro du joueur
      switch(nb){
       case 0:
       x=0;
