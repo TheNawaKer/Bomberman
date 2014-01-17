@@ -118,6 +118,7 @@ void session_on_server::send_board(){
 }
 
 void session_on_server::do_move(int posx,int posy){
+  // entre la case 0 et la case 30
   if((posx>=0 && posx<=30)&&(posy>=0 && posy<=15)){
     auto it(tab.begin());
     bool move=true;
@@ -125,11 +126,12 @@ void session_on_server::do_move(int posx,int posy){
   while(it != tab.end()){
     if(it->second==this)
       id=it->first;
+    //collision avec un joueur
     if(joueurs[it->first]->getPosX()==posx && joueurs[it->first]->getPosY()==posy){
       move=false;
       break;
     }
-    it++;
+    ++it;
   }
   if(move && !plateau->hasBlockOrBomb(posx,posy)){
    it = tab.begin();
@@ -142,7 +144,16 @@ void session_on_server::do_move(int posx,int posy){
 }
 
 void session_on_server::do_dropbomb(int posx,int posy){
+  //on ajoute la bombe
+  plateau->ajouterBombe(posx,posy);
 
+  //on envoie le position de la bombe à tout les joueurs
+
+  auto it = tab.begin();
+   while(it != tab.end()){
+    it->second->proto.Bomb(posx,posy);
+    ++it;
+  }
 }
 
 
